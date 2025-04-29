@@ -25,7 +25,7 @@ public class Professors {
 
     @Column(name ="email", nullable = false, unique = true)
     private String email;
-
+    //UniDirectional
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;

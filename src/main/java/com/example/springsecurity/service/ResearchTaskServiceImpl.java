@@ -6,7 +6,6 @@ import com.example.springsecurity.exception.ResourceNotFoundException;
 import com.example.springsecurity.mapper.ResearchTaskMapper;
 import com.example.springsecurity.repository.ResearchTaskRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,39 +13,30 @@ import java.util.stream.Collectors;
 public class ResearchTaskServiceImpl implements ResearchTasksService{
 
     ResearchTaskRepository researchTaskRepository;
+
     public ResearchTaskServiceImpl(ResearchTaskRepository researchTaskRepository) {
         this.researchTaskRepository = researchTaskRepository;
     }
-
-
     @Override
     public ResearchTasksDto addResearchTask(ResearchTasksDto researchTasksDto) {
-        ResearchTasks convertedResearchTasks = ResearchTaskMapper.mapToResearchTasksEntity(researchTasksDto);
-        ResearchTasks researchTasks= new ResearchTasks();
-        researchTasks.setTitle(convertedResearchTasks.getTitle());
-        researchTasks.setDescription(convertedResearchTasks.getDescription());
-        researchTasks.setCompleted(convertedResearchTasks.isCompleted());
-
-        ResearchTasks savedResearchTasks=researchTaskRepository.save(researchTasks);
-        return  ResearchTaskMapper.mapToResearchTaskDto(savedResearchTasks);
+        ResearchTasks researchTasks = ResearchTaskMapper.mapToResearchTasksEntity(researchTasksDto);
+        ResearchTasks savedResearchTasks = researchTaskRepository.save(researchTasks);
+        return ResearchTaskMapper.mapToResearchTaskDto(savedResearchTasks);
     }
-
     @Override
     public ResearchTasksDto getResearchTask(long id) {
-        ResearchTasks researchTasks=researchTaskRepository.findById(id).
+        ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
         return ResearchTaskMapper.mapToResearchTaskDto(researchTasks);
     }
-
     @Override
     public List<ResearchTasksDto> getAllResearchTasks() {
-        List<ResearchTasks> researchTasks=researchTaskRepository.findAll();
+        List<ResearchTasks> researchTasks = researchTaskRepository.findAll();
         return researchTasks.stream().map(ResearchTaskMapper::mapToResearchTaskDto).collect(Collectors.toList());
     }
-
     @Override
     public ResearchTasksDto updateResearchTask(ResearchTasksDto researchTasksDto, Long id) {
-        ResearchTasks researchTasks=researchTaskRepository.findById(id).
+        ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
         researchTasks.setTitle(researchTasksDto.getTitle());
         researchTasks.setDescription(researchTasksDto.getDescription());
@@ -54,27 +44,24 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
 
         return ResearchTaskMapper.mapToResearchTaskDto(researchTaskRepository.save(researchTasks));
     }
-
     @Override
     public void deleteResearchTask(long id) {
-        ResearchTasks researchTasks= researchTaskRepository.findById(id).
+        ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
         researchTaskRepository.deleteById(id);
     }
-
     @Override
     public ResearchTasksDto completeResearchTask(Long id) {
-        ResearchTasks researchTasks=researchTaskRepository.findById(id).
-                orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
+        ResearchTasks researchTasks = researchTaskRepository.findById(id).
+                orElseThrow(()-> new ResourceNotFoundException("ResearchTasks not found"));
         researchTasks.setCompleted(Boolean.TRUE);
         ResearchTasks updatedResearchTasks=researchTaskRepository.save(researchTasks);
         return ResearchTaskMapper.mapToResearchTaskDto(updatedResearchTasks);
     }
-
     @Override
     public ResearchTasksDto inCompleteResearchTask(Long id) {
-        ResearchTasks researchTasks=researchTaskRepository.findById(id).
-                orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
+        ResearchTasks researchTasks = researchTaskRepository.findById(id).
+                orElseThrow(()-> new ResourceNotFoundException("ResearchTasks not found"));
         researchTasks.setCompleted(Boolean.FALSE);
         ResearchTasks updatedResearchTasks=researchTaskRepository.save(researchTasks);
         return ResearchTaskMapper.mapToResearchTaskDto(updatedResearchTasks);

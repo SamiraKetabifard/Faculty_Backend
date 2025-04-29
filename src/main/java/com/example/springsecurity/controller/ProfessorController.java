@@ -20,7 +20,6 @@ public class ProfessorController {
         ProfessorDto savedProfessor = professorsService.createProfessor(professorDto);
         return new ResponseEntity<>(savedProfessor, HttpStatus.CREATED);
     }
-
     @GetMapping("{id}")
     public ResponseEntity<ProfessorDto> getProfessorById(@PathVariable("id") Long professorId) {
         ProfessorDto professorDto = professorsService.getProfessorById(professorId);
@@ -31,18 +30,15 @@ public class ProfessorController {
         List<ProfessorDto> professors = professorsService.getAllProfessors();
         return ResponseEntity.ok(professors);
     }
-
     @PutMapping("{id}")
     public ResponseEntity<ProfessorDto> updateProfessor(@PathVariable("id") Long professorId,
                                                       @RequestBody ProfessorDto updatedProfessor){
         ProfessorDto professorDto = professorsService.updateProfessor(professorId,updatedProfessor);
         return ResponseEntity.ok(professorDto);
     }
-
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteProfessor(@PathVariable("id") Long professorId){
         professorsService.deleteProfessor(professorId);
         return ResponseEntity.ok("Professor deleted successfully!");
     }
-
 }

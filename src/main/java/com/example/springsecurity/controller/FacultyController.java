@@ -12,17 +12,18 @@ import java.util.List;
 public class FacultyController {
 
     FacultyService facultyService;
+
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
     }
     @PostMapping
     public ResponseEntity<FacultyDto> createFaculty(@RequestBody FacultyDto facultyDto) {
-        FacultyDto savedFaculty=facultyService.createFaculty(facultyDto);
-        return new ResponseEntity<>(savedFaculty,HttpStatus.CREATED);
+        FacultyDto savedFaculty = facultyService.createFaculty(facultyDto);
+        return new ResponseEntity<> (savedFaculty,HttpStatus.CREATED);
     }
     @GetMapping("{id}")
     public ResponseEntity<FacultyDto> getFacultyById(@PathVariable("id") long id) {
-        return new ResponseEntity<>(facultyService.getFacultiesById(id),HttpStatus.OK);
+        return new ResponseEntity<> (facultyService.getFacultiesById(id),HttpStatus.OK);
     }
     @GetMapping
     public ResponseEntity<List<FacultyDto>>getAllFaculties(){
@@ -31,12 +32,11 @@ public class FacultyController {
     @PutMapping("{id}")
     public ResponseEntity<FacultyDto> updateFaculty(@PathVariable("id") long id,
                                                     @RequestBody FacultyDto facultyDto) {
-        return new ResponseEntity<>(facultyService.updateFaculty(id, facultyDto),HttpStatus.OK);
+        return new ResponseEntity<> (facultyService.updateFaculty(id, facultyDto),HttpStatus.OK);
     }
-
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteFaculty(@PathVariable("id") long id) {
         facultyService.deleteFacultyById(id);
-        return new ResponseEntity<>("deleted id:"+id,HttpStatus.OK);
+        return new ResponseEntity<> ("deleted id:"+id ,HttpStatus.OK);
     }
 }

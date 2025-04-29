@@ -7,7 +7,6 @@ import com.example.springsecurity.mapper.FacultyMapper;
 import com.example.springsecurity.repository.FacultyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,35 +22,34 @@ public class FacultyServiceImpl implements FacultyService {
         Faculty savedFaculty = facultyRepository.save(faculty);
         return FacultyMapper.mapToFacultyDto(savedFaculty);
     }
-
     @Override
     public FacultyDto getFacultiesById(long facultyId) {
-        Faculty faculty=facultyRepository.findById(facultyId).orElseThrow(
-                ()->new ResourceNotFoundException("Faculty not found"));
+        Faculty faculty = facultyRepository.findById(facultyId).orElseThrow(
+                ()-> new ResourceNotFoundException("Faculty not found"));
         return FacultyMapper.mapToFacultyDto(faculty);
     }
-
     @Override
     public List<FacultyDto> getAllFaculties() {
-        List<Faculty> facultyList=facultyRepository.findAll();
+        List<Faculty> facultyList = facultyRepository.findAll();
         return facultyList.stream().map(FacultyMapper::mapToFacultyDto).collect(Collectors.toList());
+        /*  return facultyList.stream()
+                .map(faculty -> FacultyMapper.mapToFacultyDto(faculty))
+               .collect(Collectors.toList());*/
     }
-
     @Override
     public FacultyDto updateFaculty(long facultyId, FacultyDto facultyDto) {
-        Faculty faculty=facultyRepository.findById(facultyId).orElseThrow(
-                ()->new ResourceNotFoundException("Faculty not found"));
+        Faculty faculty = facultyRepository.findById(facultyId).orElseThrow(
+                ()-> new ResourceNotFoundException("Faculty not found"));
         faculty.setFacultyName(facultyDto.getFacultyName());
         faculty.setFacultyDescription(facultyDto.getFacultyDescription());
 
         facultyRepository.save(faculty);
         return FacultyMapper.mapToFacultyDto(faculty);
     }
-
     @Override
     public void deleteFacultyById(long id) {
-        Faculty faculty =facultyRepository.findById(id).orElseThrow(
-                ()->new ResourceNotFoundException("Faculty not found"));
+        Faculty faculty = facultyRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Faculty not found"));
         facultyRepository.deleteById(id);
     }
 }

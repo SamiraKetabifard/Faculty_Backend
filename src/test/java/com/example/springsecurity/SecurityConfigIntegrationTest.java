@@ -33,7 +33,6 @@ class SecurityConfigIntegrationTest {
             "completed": false
         }
         """;
-
     @BeforeEach
     void setup() {
         // Clear any existing data
@@ -47,7 +46,6 @@ class SecurityConfigIntegrationTest {
         ResearchTasks savedTask = researchTaskRepository.save(task);
         savedTaskId = savedTask.getId();
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void adminCanAccessAllEndpoints() throws Exception {
@@ -61,7 +59,6 @@ class SecurityConfigIntegrationTest {
         mockMvc.perform(delete("/api/researchtasks/" + savedTaskId))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void userCannotModifyResearchTasks() throws Exception {
@@ -75,13 +72,11 @@ class SecurityConfigIntegrationTest {
         mockMvc.perform(delete("/api/researchtasks/" + savedTaskId))
                 .andExpect(status().isForbidden());
     }
-
     @Test
     void unauthenticatedUserGetsUnauthorized() throws Exception {
         mockMvc.perform(get("/api/researchtasks"))
                 .andExpect(status().isUnauthorized());
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void userCanCompleteResearchTask() throws Exception {

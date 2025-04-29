@@ -12,6 +12,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "faculties")
 public class Faculty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
