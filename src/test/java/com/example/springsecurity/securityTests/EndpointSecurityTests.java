@@ -40,11 +40,17 @@ class EndpointSecurityTests {
         task.setCompleted(false);
         taskId = repository.save(task).getId();
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void researchTaskCompletionShouldAllowUser() throws Exception {
         // Use the real saved task ID
+        mockMvc.perform(patch("/api/researchtasks/" + taskId + "/complete")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void researchTaskCompletionShouldAllowADMIN() throws Exception {
         mockMvc.perform(patch("/api/researchtasks/" + taskId + "/complete")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
