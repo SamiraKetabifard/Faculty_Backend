@@ -53,7 +53,7 @@ class UserAuthorizationTests {
     void userShouldNotAccessAdminEndpoints() throws Exception {
         mockMvc.perform(delete("/api/researchtasks/" + existingTaskId))
                 .andExpect(status().isForbidden());
-        // Test GET all tasks (ADMIN only)
+
         mockMvc.perform(get("/api/researchtasks"))
                 .andExpect(status().isForbidden());
     }

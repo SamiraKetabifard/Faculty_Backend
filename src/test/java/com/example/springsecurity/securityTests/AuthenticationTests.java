@@ -27,5 +27,8 @@ class AuthenticationTests {
 
         mockMvc.perform(post("/api/professors"))
                 .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(post("/api/faculties")).
+                andExpect(status().isUnauthorized());
     }
 }

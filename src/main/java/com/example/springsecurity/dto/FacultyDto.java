@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FacultyDto {
+
     private long id;
     private String facultyName;
     private String facultyDescription;

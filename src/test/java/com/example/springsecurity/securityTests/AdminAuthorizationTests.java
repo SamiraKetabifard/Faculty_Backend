@@ -23,7 +23,8 @@ class AdminAuthorizationTests {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void adminCanCreateTask() throws Exception {
+    void ResearchTaskAccessControlTest() throws Exception {
+
         // test: admin can or cannot create task
         mockMvc.perform(post("/api/researchtasks")
                         .contentType(MediaType.APPLICATION_JSON)

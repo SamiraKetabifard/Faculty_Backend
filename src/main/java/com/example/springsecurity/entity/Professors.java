@@ -13,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "professors")
 public class Professors {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -25,6 +26,7 @@ public class Professors {
 
     @Column(name ="email", nullable = false, unique = true)
     private String email;
+
     //UniDirectional
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")

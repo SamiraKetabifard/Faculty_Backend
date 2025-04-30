@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfessorDto {
+
     private long id;
     private String firstName;
     private String lastName;

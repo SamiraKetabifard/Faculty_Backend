@@ -22,13 +22,12 @@ public class ResearchTaskController {
     public ResponseEntity<ResearchTasksDto> createResearchTask(@RequestBody ResearchTasksDto researchTasksDto) {
         return new ResponseEntity<>(researchTasksService.addResearchTask(researchTasksDto), HttpStatus.CREATED);
     }
-
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("{id}")
     public ResponseEntity<ResearchTasksDto> getResearchTasksById(@PathVariable("id") long id) {
         return new ResponseEntity<>(researchTasksService.getResearchTask(id), HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ResearchTasksDto>> getAllResearchTasks() {
         return new ResponseEntity<>(researchTasksService.getAllResearchTasks(), HttpStatus.OK);
@@ -41,7 +40,7 @@ public class ResearchTaskController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
-    public ResponseEntity<String>deleteResearchTaskById(@PathVariable ("id")long id){
+    public ResponseEntity <String> deleteResearchTaskById(@PathVariable ("id")long id){
         researchTasksService.deleteResearchTask(id);
         return new ResponseEntity<>("deleted id:"+id,HttpStatus.OK);
     }
@@ -53,7 +52,7 @@ public class ResearchTaskController {
     }
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("{id}/in-complete")
-    public ResponseEntity<ResearchTasksDto> inCompleteResearchTask(@PathVariable("id")Long researchTaskId) {
+    public ResponseEntity <ResearchTasksDto> inCompleteResearchTask(@PathVariable("id")Long researchTaskId) {
         ResearchTasksDto updatedResearchTask= researchTasksService.inCompleteResearchTask(researchTaskId);
         return ResponseEntity.ok(updatedResearchTask);
     }
