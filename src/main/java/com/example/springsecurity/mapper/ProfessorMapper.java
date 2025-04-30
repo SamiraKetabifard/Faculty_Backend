@@ -1,7 +1,6 @@
 package com.example.springsecurity.mapper;
 
 import com.example.springsecurity.dto.ProfessorDto;
-import com.example.springsecurity.entity.Faculty;
 import com.example.springsecurity.entity.Professors;
 
 public class ProfessorMapper {

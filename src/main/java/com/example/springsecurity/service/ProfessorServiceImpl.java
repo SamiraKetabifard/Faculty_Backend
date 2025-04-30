@@ -33,8 +33,8 @@ public class ProfessorServiceImpl implements ProfessorsService{
     }
     @Override
     public ProfessorDto getProfessorById(Long professorId){
-        Professors professors = professorRepository.findById(professorId).orElseThrow
-                (()-> new ResourceNotFoundException("Professor is not exists with given id"));
+        Professors professors = professorRepository.findById(professorId).
+                orElseThrow(()-> new ResourceNotFoundException("Professor is not exists with given id"));
         return ProfessorMapper.mapToProfessorDto(professors);
     }
     @Override

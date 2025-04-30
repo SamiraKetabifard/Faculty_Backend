@@ -6,10 +6,10 @@ import java.util.List;
 public interface ResearchTasksService {
 
     ResearchTasksDto addResearchTask(ResearchTasksDto researchTasksDto);
-    ResearchTasksDto getResearchTask(long id);
+    ResearchTasksDto getResearchTask(Long id);
     List<ResearchTasksDto> getAllResearchTasks();
     ResearchTasksDto updateResearchTask(ResearchTasksDto researchTasksDto,Long id);
-    void deleteResearchTask(long id);
+    void deleteResearchTask(Long id);
     ResearchTasksDto completeResearchTask(Long id);
     ResearchTasksDto inCompleteResearchTask(Long id);
 

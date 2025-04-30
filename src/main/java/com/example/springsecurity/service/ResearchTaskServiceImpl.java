@@ -24,9 +24,9 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
         return ResearchTaskMapper.mapToResearchTaskDto(savedResearchTasks);
     }
     @Override
-    public ResearchTasksDto getResearchTask(long id) {
+    public ResearchTasksDto getResearchTask(Long id) {
         ResearchTasks researchTasks = researchTaskRepository.findById(id).
-                orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
+                orElseThrow(()-> new ResourceNotFoundException("ResearchTasks not found"));
         return ResearchTaskMapper.mapToResearchTaskDto(researchTasks);
     }
     @Override
@@ -45,7 +45,7 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
         return ResearchTaskMapper.mapToResearchTaskDto(researchTaskRepository.save(researchTasks));
     }
     @Override
-    public void deleteResearchTask(long id) {
+    public void deleteResearchTask(Long id) {
         ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
         researchTaskRepository.deleteById(id);
@@ -55,7 +55,7 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
         ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()-> new ResourceNotFoundException("ResearchTasks not found"));
         researchTasks.setCompleted(Boolean.TRUE);
-        ResearchTasks updatedResearchTasks=researchTaskRepository.save(researchTasks);
+        ResearchTasks updatedResearchTasks = researchTaskRepository.save(researchTasks);
         return ResearchTaskMapper.mapToResearchTaskDto(updatedResearchTasks);
     }
     @Override
@@ -63,7 +63,7 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
         ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()-> new ResourceNotFoundException("ResearchTasks not found"));
         researchTasks.setCompleted(Boolean.FALSE);
-        ResearchTasks updatedResearchTasks=researchTaskRepository.save(researchTasks);
+        ResearchTasks updatedResearchTasks = researchTaskRepository.save(researchTasks);
         return ResearchTaskMapper.mapToResearchTaskDto(updatedResearchTasks);
     }
 }

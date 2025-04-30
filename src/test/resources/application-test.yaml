@@ -18,5 +18,3 @@ spring:
     console:
       enabled: true
       path: /h2-console
-
-# No spring.security.user needed if using InMemoryUserDetailsManager

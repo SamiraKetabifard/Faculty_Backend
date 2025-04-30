@@ -6,10 +6,10 @@ import java.util.List;
 public interface FacultyService {
 
     FacultyDto createFaculty(FacultyDto facultyDto);
-    FacultyDto getFacultiesById(long facultyId);
+    FacultyDto getFacultiesById(Long facultyId);
     List<FacultyDto> getAllFaculties();
-    FacultyDto updateFaculty(long facultyId, FacultyDto facultyDto);
-    void deleteFacultyById(long id);
+    FacultyDto updateFaculty(Long facultyId, FacultyDto facultyDto);
+    void deleteFacultyById(Long id);
 
 }
 

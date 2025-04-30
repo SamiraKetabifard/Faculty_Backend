@@ -23,9 +23,9 @@ public class FacultyServiceImpl implements FacultyService {
         return FacultyMapper.mapToFacultyDto(savedFaculty);
     }
     @Override
-    public FacultyDto getFacultiesById(long facultyId) {
-        Faculty faculty = facultyRepository.findById(facultyId).orElseThrow(
-                ()-> new ResourceNotFoundException("Faculty not found"));
+    public FacultyDto getFacultiesById(Long facultyId) {
+        Faculty faculty = facultyRepository.findById(facultyId).
+                orElseThrow(()-> new ResourceNotFoundException("Faculty not found"));
         return FacultyMapper.mapToFacultyDto(faculty);
     }
     @Override
@@ -37,9 +37,9 @@ public class FacultyServiceImpl implements FacultyService {
                .collect(Collectors.toList());*/
     }
     @Override
-    public FacultyDto updateFaculty(long facultyId, FacultyDto facultyDto) {
-        Faculty faculty = facultyRepository.findById(facultyId).orElseThrow(
-                ()-> new ResourceNotFoundException("Faculty not found"));
+    public FacultyDto updateFaculty(Long facultyId, FacultyDto facultyDto) {
+        Faculty faculty = facultyRepository.findById(facultyId).
+                orElseThrow(()-> new ResourceNotFoundException("Faculty not found"));
         faculty.setFacultyName(facultyDto.getFacultyName());
         faculty.setFacultyDescription(facultyDto.getFacultyDescription());
 
@@ -47,7 +47,7 @@ public class FacultyServiceImpl implements FacultyService {
         return FacultyMapper.mapToFacultyDto(faculty);
     }
     @Override
-    public void deleteFacultyById(long id) {
+    public void deleteFacultyById(Long id) {
         Faculty faculty = facultyRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("Faculty not found"));
         facultyRepository.deleteById(id);

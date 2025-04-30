@@ -24,7 +24,6 @@ class EndpointSecurityTests {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ResearchTaskRepository repository;
 
