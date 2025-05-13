@@ -47,7 +47,7 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
     public void deleteResearchTask(Long id) {
         ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
-        researchTaskRepository.deleteById(researchTasks.getId());////////////////////
+        researchTaskRepository.deleteById(researchTasks.getId());
     }
     @Override
     public ResearchTasksDto completeResearchTask(Long id) {
