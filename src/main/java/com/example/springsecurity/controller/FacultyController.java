@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/faculties")
 public class FacultyController {
 
-    FacultyService facultyService;
+    private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;

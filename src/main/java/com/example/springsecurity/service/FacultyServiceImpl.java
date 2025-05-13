@@ -42,7 +42,6 @@ public class FacultyServiceImpl implements FacultyService {
                 orElseThrow(()-> new ResourceNotFoundException("Faculty not found"));
         faculty.setFacultyName(facultyDto.getFacultyName());
         faculty.setFacultyDescription(facultyDto.getFacultyDescription());
-
         facultyRepository.save(faculty);
         return FacultyMapper.mapToFacultyDto(faculty);
     }
@@ -50,6 +49,6 @@ public class FacultyServiceImpl implements FacultyService {
     public void deleteFacultyById(Long id) {
         Faculty faculty = facultyRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("Faculty not found"));
-        facultyRepository.deleteById(id);
+        facultyRepository.deleteById(faculty.getId());
     }
 }

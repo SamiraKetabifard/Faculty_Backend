@@ -24,9 +24,9 @@ public class ProfessorServiceImpl implements ProfessorsService{
     }
     @Override
     public ProfessorDto createProfessor(ProfessorDto professorDto){
-        Professors professors = ProfessorMapper.mapToProfessors(professorDto);
         Faculty faculty = facultyRepository.findById(professorDto.getFacultyId())
                 .orElseThrow(() -> new ResourceNotFoundException("faculty id is not found"));
+        Professors professors = ProfessorMapper.mapToProfessors(professorDto);
         professors.setFaculty(faculty);
         Professors savedProfessor = professorRepository.save(professors);
         return ProfessorMapper.mapToProfessorDto(savedProfessor);
@@ -34,7 +34,7 @@ public class ProfessorServiceImpl implements ProfessorsService{
     @Override
     public ProfessorDto getProfessorById(Long professorId){
         Professors professors = professorRepository.findById(professorId).
-                orElseThrow(()-> new ResourceNotFoundException("Professor is not exists with given id"));
+                orElseThrow(()-> new ResourceNotFoundException("Professor does not exist with given id"));
         return ProfessorMapper.mapToProfessorDto(professors);
     }
     @Override
@@ -47,13 +47,12 @@ public class ProfessorServiceImpl implements ProfessorsService{
     @Override
     public ProfessorDto updateProfessor(Long professorId, ProfessorDto updatedProfessor){
         Professors professors = professorRepository.findById(professorId).
-                orElseThrow(() -> new ResourceNotFoundException("Professor is not exists with given id"));
+                orElseThrow(() -> new ResourceNotFoundException("Professor does not exist with given id"));
+        Faculty faculty = facultyRepository.findById(updatedProfessor.getFacultyId()).
+                orElseThrow(() -> new ResourceNotFoundException("Faculty does not exist with given id"));
         professors.setFirstName(updatedProfessor.getFirstName());
         professors.setLastName(updatedProfessor.getLastName());
         professors.setEmail(updatedProfessor.getEmail());
-
-        Faculty faculty = facultyRepository.findById(updatedProfessor.getFacultyId()).
-                orElseThrow(() -> new ResourceNotFoundException("Faculty is not exists with given id"));
         professors.setFaculty(faculty);
         Professors updatedProfessorObj = professorRepository.save(professors);
         return ProfessorMapper.mapToProfessorDto(updatedProfessorObj);
@@ -61,7 +60,7 @@ public class ProfessorServiceImpl implements ProfessorsService{
     @Override
     public void deleteProfessor(Long professorId) {
         Professors professors = professorRepository.findById(professorId).
-                orElseThrow(() -> new ResourceNotFoundException("Professor is not exists with given id"));
-        professorRepository.deleteById(professorId);
+                orElseThrow(() -> new ResourceNotFoundException("Professor does not exist with given id"));
+        professorRepository.deleteById(professors.getId());
     }
 }

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class ResearchTaskServiceImpl implements ResearchTasksService{
 
-    ResearchTaskRepository researchTaskRepository;
+    private final ResearchTaskRepository researchTaskRepository;
 
     public ResearchTaskServiceImpl(ResearchTaskRepository researchTaskRepository) {
         this.researchTaskRepository = researchTaskRepository;
@@ -41,14 +41,13 @@ public class ResearchTaskServiceImpl implements ResearchTasksService{
         researchTasks.setTitle(researchTasksDto.getTitle());
         researchTasks.setDescription(researchTasksDto.getDescription());
         researchTasks.setCompleted(researchTasksDto.isCompleted());
-
         return ResearchTaskMapper.mapToResearchTaskDto(researchTaskRepository.save(researchTasks));
     }
     @Override
     public void deleteResearchTask(Long id) {
         ResearchTasks researchTasks = researchTaskRepository.findById(id).
                 orElseThrow(()->new ResourceNotFoundException("ResearchTasks not found"));
-        researchTaskRepository.deleteById(id);
+        researchTaskRepository.deleteById(researchTasks.getId());////////////////////
     }
     @Override
     public ResearchTasksDto completeResearchTask(Long id) {
