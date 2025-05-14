@@ -34,7 +34,8 @@ public class SecurityConfig {
            //authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
         authorizeHttpRequests((authorize) -> {
                  authorize.anyRequest().authenticated();
-            }).httpBasic(Customizer.withDefaults());
+            })
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
     @Bean

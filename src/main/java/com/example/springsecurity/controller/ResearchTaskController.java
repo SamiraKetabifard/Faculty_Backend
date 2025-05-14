@@ -11,12 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/researchtasks")
 public class ResearchTaskController {
+
     private ResearchTasksService researchTasksService;
 
     public ResearchTaskController(ResearchTasksService researchTasksService) {
         this.researchTasksService = researchTasksService;
     }
-
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ResearchTasksDto> createResearchTask(@RequestBody ResearchTasksDto researchTasksDto) {
