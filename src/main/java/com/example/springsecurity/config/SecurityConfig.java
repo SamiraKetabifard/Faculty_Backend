@@ -32,13 +32,12 @@ public class SecurityConfig {
            //authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN","USER");
            //authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN","USER");
            //authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
-        authorizeHttpRequests((authorize) -> {
-                 authorize.anyRequest().authenticated();
-            })
+        authorizeHttpRequests((authorize) ->
+                 authorize.anyRequest().authenticated()
+            )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
-
     @Bean
     public UserDetailsService userDetailsService(){
         UserDetails SamiraUser = User.builder()
