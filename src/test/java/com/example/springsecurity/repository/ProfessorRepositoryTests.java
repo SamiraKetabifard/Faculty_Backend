@@ -65,9 +65,9 @@ class ProfessorRepositoryTests {
         professorRepository.save(professor1);
 
         Professors professor2 = new Professors();
-        professor2.setFirstName("samira");
+        professor2.setFirstName("mari");
         professor2.setLastName("ketabi");
-        professor2.setEmail("samira@gmail.com");
+        professor2.setEmail("mari@gmail.com");
         professorRepository.save(professor2);
         //act
         List<Professors> professors = professorRepository.findAll();
@@ -95,16 +95,16 @@ class ProfessorRepositoryTests {
         professorRepository.save(professor1);
 
         Professors professor2 = new Professors();
-        professor2.setFirstName("samira");
+        professor2.setFirstName("mari");
         professor2.setLastName("ketabi");
-        professor2.setEmail("samira@gmail.com");
+        professor2.setEmail("mari@gmail.com");
         professor2.setFaculty(savedFaculty1);
         professorRepository.save(professor2);
 
         Professors professor3 = new Professors();
-        professor3.setFirstName("samira");
-        professor3.setLastName("ketabi");
-        professor3.setEmail("samira@gmail.com");
+        professor3.setFirstName("joe");
+        professor3.setLastName("anderson");
+        professor3.setEmail("j@gmail.com");
         professor3.setFaculty(savedFaculty2);
         professorRepository.save(professor3);
         //act
@@ -117,7 +117,7 @@ class ProfessorRepositoryTests {
         assertThat(faculty1Professors).hasSize(2);
         assertThat(faculty1Professors)
                 .extracting(Professors::getEmail)
-                .containsExactlyInAnyOrder("samira@gmail.com", "samira@gmail.com");
+                .containsExactlyInAnyOrder("samira@gmail.com", "mari@gmail.com");
     }
     @Test
     void shouldDeleteProfessor() {
