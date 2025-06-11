@@ -24,40 +24,40 @@ class ProfessorRepositoryTests {
 
     @Test
     void shouldSaveProfessorWithFaculty() {
+        //arrange
         Faculty faculty = new Faculty();
         faculty.setFacultyName("Science");
         faculty.setFacultyDescription("Sci Dept");
         Faculty savedFaculty = facultyRepository.save(faculty);
-
         Professors professor = new Professors();
         professor.setFirstName("Samira");
         professor.setLastName("Reza Mari");
         professor.setEmail("samira.reza.mari@gmail.com");
         professor.setFaculty(savedFaculty);
-
+        //act
         Professors savedProfessor = professorRepository.save(professor);
-
+        //assert
         assertThat(savedProfessor).isNotNull();
         assertThat(savedProfessor.getId()).isPositive();
         assertThat(savedProfessor.getFaculty().getId()).isEqualTo(savedFaculty.getId());
     }
-
     @Test
     void shouldFindProfessorById() {
+        //arrange
         Professors professor = new Professors();
         professor.setFirstName("Samira");
         professor.setLastName("Reza Mari");
         professor.setEmail("samira.reza.mari@gmail.com");
         Professors savedProfessor = professorRepository.save(professor);
-
+        //act
         Optional<Professors> foundProfessor = professorRepository.findById(savedProfessor.getId());
-
+        //assert
         assertThat(foundProfessor).isPresent();
         assertThat(foundProfessor.get().getFirstName()).isEqualTo("Samira");
     }
-
     @Test
     void shouldFindAllProfessors() {
+        //arrange
         Professors professor1 = new Professors();
         professor1.setFirstName("Samira");
         professor1.setLastName("Reza Mari");
@@ -69,14 +69,14 @@ class ProfessorRepositoryTests {
         professor2.setLastName("Reza Mari");
         professor2.setEmail("samira.reza.mari2@gmail.com");
         professorRepository.save(professor2);
-
+        //act
         List<Professors> professors = professorRepository.findAll();
-
+        //assert
         assertThat(professors).hasSize(2);
     }
-
     @Test
     void shouldFindProfessorsByFacultyUsingExistingRelationships() {
+        //arrange
         Faculty faculty1 = new Faculty();
         faculty1.setFacultyName("Faculty 1");
         faculty1.setFacultyDescription("Desc");
@@ -107,29 +107,29 @@ class ProfessorRepositoryTests {
         professor3.setEmail("samira.reza.mari3@gmail.com");
         professor3.setFaculty(savedFaculty2);
         professorRepository.save(professor3);
-
+        //act
         // Get all professors and filter by faculty ID (using primitive long comparison)
         List<Professors> allProfessors = professorRepository.findAll();
         List<Professors> faculty1Professors = allProfessors.stream()
                 .filter(p -> p.getFaculty().getId() == savedFaculty1.getId())  // Using == for primitive long
                 .toList();
-
+        //assert
         assertThat(faculty1Professors).hasSize(2);
         assertThat(faculty1Professors)
                 .extracting(Professors::getEmail)
                 .containsExactlyInAnyOrder("samira.reza.mari1@gmail.com", "samira.reza.mari2@gmail.com");
     }
-
     @Test
     void shouldDeleteProfessor() {
+        //arrange
         Professors professor = new Professors();
         professor.setFirstName("Samira");
         professor.setLastName("Reza Mari");
         professor.setEmail("samira.reza.mari.delete@gmail.com");
         Professors savedProfessor = professorRepository.save(professor);
-
+        //act
         professorRepository.deleteById(savedProfessor.getId());
-
+        //assert
         assertThat(professorRepository.findById(savedProfessor.getId())).isEmpty();
     }
 }

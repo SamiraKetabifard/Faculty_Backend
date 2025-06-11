@@ -40,7 +40,6 @@ class FacultyServiceImplTests {
         assertThat(result.getFacultyName()).isEqualTo("New Faculty");
         verify(facultyRepository).save(any(Faculty.class));
     }
-
     @Test
     void shouldGetFacultyById() {
         Long facultyId = 1L;
@@ -53,7 +52,6 @@ class FacultyServiceImplTests {
         assertThat(result.getId()).isEqualTo(facultyId);
         assertThat(result.getFacultyName()).isEqualTo("Existing Faculty");
     }
-
     @Test
     void shouldThrowExceptionWhenFacultyNotFound() {
         Long facultyId = 1L;
@@ -64,25 +62,23 @@ class FacultyServiceImplTests {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Faculty not found");
     }
-
     @Test
     void shouldGetAllFaculties() {
+        //arrange
         List<Faculty> faculties = List.of(
                 new Faculty(1L, "Faculty 1", "Desc 1"),
-                new Faculty(2L, "Faculty 2", "Desc 2")
-        );
-
+                new Faculty(2L, "Faculty 2", "Desc 2"));
         when(facultyRepository.findAll()).thenReturn(faculties);
-
+        //act
         List<FacultyDto> result = facultyService.getAllFaculties();
-
+        //assert
         assertThat(result).hasSize(2);
         assertThat(result.get(0).getFacultyName()).isEqualTo("Faculty 1");
         assertThat(result.get(1).getFacultyName()).isEqualTo("Faculty 2");
     }
-
     @Test
     void shouldUpdateFaculty() {
+        //arrange
         Long facultyId = 1L;
         Faculty existingFaculty = new Faculty(facultyId, "Old Name", "Old Desc");
         FacultyDto updatedDto = new FacultyDto(facultyId, "New Name", "New Desc");
@@ -90,24 +86,23 @@ class FacultyServiceImplTests {
 
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(existingFaculty));
         when(facultyRepository.save(any(Faculty.class))).thenReturn(updatedFaculty);
-
+        //act
         FacultyDto result = facultyService.updateFaculty(facultyId, updatedDto);
-
+        //assert
         assertThat(result.getFacultyName()).isEqualTo("New Name");
         assertThat(result.getFacultyDescription()).isEqualTo("New Desc");
         verify(facultyRepository).save(existingFaculty);
     }
-
     @Test
     void shouldDeleteFaculty() {
+        //arrange
         Long facultyId = 1L;
         Faculty faculty = new Faculty(facultyId, "To Delete", "Desc");
-
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(faculty));
         doNothing().when(facultyRepository).deleteById(facultyId);
-
+        //act
         facultyService.deleteFacultyById(facultyId);
-
+        //assert
         verify(facultyRepository).deleteById(facultyId);
     }
 }

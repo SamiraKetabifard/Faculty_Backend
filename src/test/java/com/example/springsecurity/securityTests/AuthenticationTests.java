@@ -28,20 +28,17 @@ class AuthenticationTests {
                 .andExpect(status().isUnauthorized());
         mockMvc.perform(post("/api/faculties"))
                 .andExpect(status().isUnauthorized());
-
         // Professor endpoints
         mockMvc.perform(get("/api/professors"))
                 .andExpect(status().isUnauthorized());
         mockMvc.perform(post("/api/professors"))
                 .andExpect(status().isUnauthorized());
-
         // ResearchTask endpoints
         mockMvc.perform(get("/api/researchtasks"))
                 .andExpect(status().isUnauthorized());
         mockMvc.perform(post("/api/researchtasks"))
                 .andExpect(status().isUnauthorized());
     }
-
     @Test
     @WithMockUser(username = "invalid", password = "invalid")
     void invalidCredentialsShouldFail() throws Exception {

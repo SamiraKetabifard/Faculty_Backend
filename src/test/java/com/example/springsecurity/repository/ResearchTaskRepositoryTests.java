@@ -25,10 +25,8 @@ class ResearchTaskRepositoryTests {
         task.setTitle("New Research");
         task.setDescription("Research Description");
         task.setCompleted(false);
-
         // Save the task
         ResearchTasks savedTask = researchTaskRepository.save(task);
-
         // Verify the saved task
         assertThat(savedTask).isNotNull();
         assertThat(savedTask.getId()).isPositive();
@@ -36,7 +34,6 @@ class ResearchTaskRepositoryTests {
         assertThat(savedTask.getDescription()).isEqualTo("Research Description");
         assertThat(savedTask.isCompleted()).isFalse();
     }
-
     @Test
     void shouldFindTaskById() {
         // Create and save a task
@@ -45,16 +42,13 @@ class ResearchTaskRepositoryTests {
         task.setDescription("Task to find");
         task.setCompleted(true);
         ResearchTasks savedTask = researchTaskRepository.save(task);
-
         // Find the task by ID
         Optional<ResearchTasks> foundTask = researchTaskRepository.findById(savedTask.getId());
-
         // Verify the found task
         assertThat(foundTask).isPresent();
         assertThat(foundTask.get().getTitle()).isEqualTo("Find Me");
         assertThat(foundTask.get().isCompleted()).isTrue();
     }
-
     @Test
     void shouldFindAllTasks() {
         // Create and save multiple tasks
@@ -69,17 +63,14 @@ class ResearchTaskRepositoryTests {
         task2.setDescription("Description 2");
         task2.setCompleted(true);
         researchTaskRepository.save(task2);
-
         // Get all tasks
         List<ResearchTasks> allTasks = researchTaskRepository.findAll();
-
         // Verify
         assertThat(allTasks).hasSize(2);
         assertThat(allTasks)
                 .extracting(ResearchTasks::getTitle)
                 .containsExactlyInAnyOrder("Task 1", "Task 2");
     }
-
     @Test
     void shouldUpdateTask() {
         // Create and save initial task
@@ -88,13 +79,11 @@ class ResearchTaskRepositoryTests {
         task.setDescription("Original Description");
         task.setCompleted(false);
         ResearchTasks savedTask = researchTaskRepository.save(task);
-
         // Update the task
         savedTask.setTitle("Updated Title");
         savedTask.setDescription("Updated Description");
         savedTask.setCompleted(true);
         ResearchTasks updatedTask = researchTaskRepository.save(savedTask);
-
         // Verify the update
         Optional<ResearchTasks> foundTask = researchTaskRepository.findById(updatedTask.getId());
         assertThat(foundTask).isPresent();
@@ -102,7 +91,6 @@ class ResearchTaskRepositoryTests {
         assertThat(foundTask.get().getDescription()).isEqualTo("Updated Description");
         assertThat(foundTask.get().isCompleted()).isTrue();
     }
-
     @Test
     void shouldDeleteTask() {
         // Create and save a task
@@ -110,15 +98,12 @@ class ResearchTaskRepositoryTests {
         task.setTitle("To Be Deleted");
         task.setDescription("Task description");
         ResearchTasks savedTask = researchTaskRepository.save(task);
-
         // Delete the task
         researchTaskRepository.deleteById(savedTask.getId());
-
         // Verify deletion
         Optional<ResearchTasks> deletedTask = researchTaskRepository.findById(savedTask.getId());
         assertThat(deletedTask).isEmpty();
     }
-
     @Test
     void shouldFilterCompletedTasksInMemory() {
         // Create and save tasks with different completion statuses
@@ -133,13 +118,11 @@ class ResearchTaskRepositoryTests {
         incompleteTask.setDescription("Incomplete description");
         incompleteTask.setCompleted(false);
         researchTaskRepository.save(incompleteTask);
-
         // Get all tasks and filter in memory
         List<ResearchTasks> allTasks = researchTaskRepository.findAll();
         List<ResearchTasks> completedTasks = allTasks.stream()
                 .filter(ResearchTasks::isCompleted)
                 .toList();
-
         // Verify
         assertThat(completedTasks).hasSize(1);
         assertThat(completedTasks.get(0).getTitle()).isEqualTo("Completed Task");

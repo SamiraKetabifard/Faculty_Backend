@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
-class FacultyControllerSecurityTests {
+class FacultyControllerSecurityTests{
 
     @Autowired
     private MockMvc mockMvc;
@@ -65,14 +65,12 @@ class FacultyControllerSecurityTests {
                         .content("{\"facultyName\":\"Updated Faculty\",\"facultyDescription\":\"Updated Desc\"}"))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void deleteFaculty_ShouldAllowAdmin() throws Exception {
         mockMvc.perform(delete("/api/faculties/" + facultyId))
                 .andExpect(status().isOk());
     }
-
     @Test
     void allEndpoints_ShouldRequireAuthentication() throws Exception {
         mockMvc.perform(get("/api/faculties"))

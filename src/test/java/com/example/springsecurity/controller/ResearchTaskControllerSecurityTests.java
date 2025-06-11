@@ -40,7 +40,6 @@ class ResearchTaskControllerSecurityTests {
         ResearchTasks savedTask = researchTaskRepository.save(task);
         taskId = savedTask.getId();
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void createResearchTask_ShouldAllowAdmin() throws Exception {
@@ -49,21 +48,18 @@ class ResearchTaskControllerSecurityTests {
                         .content("{\"title\":\"New Task\",\"description\":\"New Description\",\"completed\":false}"))
                 .andExpect(status().isCreated());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void getAllResearchTasks_ShouldAllowAdmin() throws Exception {
         mockMvc.perform(get("/api/researchtasks"))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = {"ADMIN", "USER"})
     void getResearchTaskById_ShouldAllowAuthenticatedUsers() throws Exception {
         mockMvc.perform(get("/api/researchtasks/" + taskId))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void updateResearchTask_ShouldAllowAdmin() throws Exception {
@@ -72,29 +68,24 @@ class ResearchTaskControllerSecurityTests {
                         .content("{\"title\":\"Updated Task\",\"description\":\"Updated Description\",\"completed\":true}"))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void deleteResearchTask_ShouldAllowAdmin() throws Exception {
         mockMvc.perform(delete("/api/researchtasks/" + taskId))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = {"ADMIN", "USER"})
     void completeResearchTask_ShouldAllowAuthenticatedUsers() throws Exception {
         mockMvc.perform(patch("/api/researchtasks/" + taskId + "/complete"))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = {"ADMIN", "USER"})
     void inCompleteResearchTask_ShouldAllowAuthenticatedUsers() throws Exception {
         mockMvc.perform(patch("/api/researchtasks/" + taskId + "/in-complete"))
                 .andExpect(status().isOk());
     }
-
-    // Unhappy Path Tests
     @Test
     @WithMockUser(roles = "USER")
     void createResearchTask_ShouldForbidUser() throws Exception {
@@ -103,14 +94,12 @@ class ResearchTaskControllerSecurityTests {
                         .content("{\"title\":\"New Task\",\"description\":\"New Description\",\"completed\":false}"))
                 .andExpect(status().isForbidden());
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void getAllResearchTasks_ShouldForbidUser() throws Exception {
         mockMvc.perform(get("/api/researchtasks"))
                 .andExpect(status().isForbidden());
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void updateResearchTask_ShouldForbidUser() throws Exception {
@@ -119,14 +108,12 @@ class ResearchTaskControllerSecurityTests {
                         .content("{\"title\":\"Updated Task\",\"description\":\"Updated Description\",\"completed\":true}"))
                 .andExpect(status().isForbidden());
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void deleteResearchTask_ShouldForbidUser() throws Exception {
         mockMvc.perform(delete("/api/researchtasks/" + taskId))
                 .andExpect(status().isForbidden());
     }
-
     @Test
     void allEndpoints_ShouldRequireAuthentication() throws Exception {
         mockMvc.perform(get("/api/researchtasks"))
@@ -140,7 +127,6 @@ class ResearchTaskControllerSecurityTests {
         mockMvc.perform(patch("/api/researchtasks/1/complete"))
                 .andExpect(status().isUnauthorized());
     }
-
     @Test
     @WithMockUser(roles = "USER")
     void getNonExistentResearchTask_ShouldReturnNotFound() throws Exception {

@@ -46,62 +46,52 @@ class ProfessorControllerSecurityTests {
         facultyId = facultyRepository.save(faculty).getId();
 
         Professors professor = new Professors();
-        professor.setFirstName("Samira");
-        professor.setLastName("Reza");
-        professor.setEmail("samira.reza@gmail.com"); // Changed initial email
+        professor.setFirstName("samira");
+        professor.setLastName("ketabi");
+        professor.setEmail("samira@gmail.com");
         professor.setFaculty(faculty);
         professorId = professorRepository.save(professor).getId();
     }
-
     @Test
     @WithMockUser(roles = {"ADMIN", "USER"})
     void getAllProfessors_ShouldAllowAuthenticatedUsers() throws Exception {
         mockMvc.perform(get("/api/professors"))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = {"ADMIN", "USER"})
     void getProfessorById_ShouldAllowAuthenticatedUsers() throws Exception {
         mockMvc.perform(get("/api/professors/" + professorId))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void createProfessor_ShouldAllowAdmin() throws Exception {
         String professorJson = String.format(
-                "{\"firstName\":\"Mari\",\"lastName\":\"Reza\",\"email\":\"mari.reza@gmail.com\",\"facultyId\":%d}",
-                facultyId
-        );
-
+                "{\"firstName\":\"Mari\",\"lastName\":\"rezaei\",\"email\":\"mari@gmail.com\",\"facultyId\":%d}",
+                facultyId);
         mockMvc.perform(post("/api/professors")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(professorJson))
                 .andExpect(status().isCreated());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void updateProfessor_ShouldAllowAdmin() throws Exception {
         String professorJson = String.format(
-                "{\"firstName\":\"Samira\",\"lastName\":\"Mari\",\"email\":\"samira.mari@gmail.com\",\"facultyId\":%d}",
-                facultyId
-        );
-
+                "{\"firstName\":\"samira\",\"lastName\":\"ketabi\",\"email\":\"samira@gmail.com\",\"facultyId\":%d}",
+                facultyId);
         mockMvc.perform(put("/api/professors/" + professorId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(professorJson))
                 .andExpect(status().isOk());
     }
-
     @Test
     @WithMockUser(roles = "ADMIN")
     void deleteProfessor_ShouldAllowAdmin() throws Exception {
         mockMvc.perform(delete("/api/professors/" + professorId))
                 .andExpect(status().isOk());
     }
-
     @Test
     void allEndpoints_ShouldRequireAuthentication() throws Exception {
         mockMvc.perform(get("/api/professors"))
