@@ -30,9 +30,9 @@ class ProfessorRepositoryTests {
         faculty.setFacultyDescription("Sci Dept");
         Faculty savedFaculty = facultyRepository.save(faculty);
         Professors professor = new Professors();
-        professor.setFirstName("Samira");
-        professor.setLastName("Reza Mari");
-        professor.setEmail("samira.reza.mari@gmail.com");
+        professor.setFirstName("samira");
+        professor.setLastName("ketabi");
+        professor.setEmail("samira@gmail.com");
         professor.setFaculty(savedFaculty);
         //act
         Professors savedProfessor = professorRepository.save(professor);
@@ -45,29 +45,29 @@ class ProfessorRepositoryTests {
     void shouldFindProfessorById() {
         //arrange
         Professors professor = new Professors();
-        professor.setFirstName("Samira");
-        professor.setLastName("Reza Mari");
-        professor.setEmail("samira.reza.mari@gmail.com");
+        professor.setFirstName("samira");
+        professor.setLastName("ketabi");
+        professor.setEmail("samira@gmail.com");
         Professors savedProfessor = professorRepository.save(professor);
         //act
         Optional<Professors> foundProfessor = professorRepository.findById(savedProfessor.getId());
         //assert
         assertThat(foundProfessor).isPresent();
-        assertThat(foundProfessor.get().getFirstName()).isEqualTo("Samira");
+        assertThat(foundProfessor.get().getFirstName()).isEqualTo("samira");
     }
     @Test
     void shouldFindAllProfessors() {
         //arrange
         Professors professor1 = new Professors();
-        professor1.setFirstName("Samira");
-        professor1.setLastName("Reza Mari");
-        professor1.setEmail("samira.reza.mari1@gmail.com");
+        professor1.setFirstName("samira");
+        professor1.setLastName("ketabi");
+        professor1.setEmail("samira@gmail.com");
         professorRepository.save(professor1);
 
         Professors professor2 = new Professors();
-        professor2.setFirstName("Samira");
-        professor2.setLastName("Reza Mari");
-        professor2.setEmail("samira.reza.mari2@gmail.com");
+        professor2.setFirstName("samira");
+        professor2.setLastName("ketabi");
+        professor2.setEmail("samira@gmail.com");
         professorRepository.save(professor2);
         //act
         List<Professors> professors = professorRepository.findAll();
@@ -88,23 +88,23 @@ class ProfessorRepositoryTests {
         Faculty savedFaculty2 = facultyRepository.save(faculty2);
 
         Professors professor1 = new Professors();
-        professor1.setFirstName("Samira");
-        professor1.setLastName("Reza Mari");
-        professor1.setEmail("samira.reza.mari1@gmail.com");
+        professor1.setFirstName("samira");
+        professor1.setLastName("ketabi");
+        professor1.setEmail("samira@gmail.com");
         professor1.setFaculty(savedFaculty1);
         professorRepository.save(professor1);
 
         Professors professor2 = new Professors();
-        professor2.setFirstName("Samira");
-        professor2.setLastName("Reza Mari");
-        professor2.setEmail("samira.reza.mari2@gmail.com");
+        professor2.setFirstName("samira");
+        professor2.setLastName("ketabi");
+        professor2.setEmail("samira@gmail.com");
         professor2.setFaculty(savedFaculty1);
         professorRepository.save(professor2);
 
         Professors professor3 = new Professors();
-        professor3.setFirstName("Samira");
-        professor3.setLastName("Reza Mari");
-        professor3.setEmail("samira.reza.mari3@gmail.com");
+        professor3.setFirstName("samira");
+        professor3.setLastName("ketabi");
+        professor3.setEmail("samira@gmail.com");
         professor3.setFaculty(savedFaculty2);
         professorRepository.save(professor3);
         //act
@@ -117,15 +117,15 @@ class ProfessorRepositoryTests {
         assertThat(faculty1Professors).hasSize(2);
         assertThat(faculty1Professors)
                 .extracting(Professors::getEmail)
-                .containsExactlyInAnyOrder("samira.reza.mari1@gmail.com", "samira.reza.mari2@gmail.com");
+                .containsExactlyInAnyOrder("samira@gmail.com", "samira@gmail.com");
     }
     @Test
     void shouldDeleteProfessor() {
         //arrange
         Professors professor = new Professors();
         professor.setFirstName("Samira");
-        professor.setLastName("Reza Mari");
-        professor.setEmail("samira.reza.mari.delete@gmail.com");
+        professor.setLastName("ketabi");
+        professor.setEmail("samira@gmail.com");
         Professors savedProfessor = professorRepository.save(professor);
         //act
         professorRepository.deleteById(savedProfessor.getId());

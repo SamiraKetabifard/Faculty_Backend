@@ -56,6 +56,7 @@ class FacultyRepositoryTests {
         faculty1.setFacultyName("Faculty 1");
         faculty1.setFacultyDescription("Desc 1");
         facultyRepository.save(faculty1);
+
         Faculty faculty2 = new Faculty();
         faculty2.setFacultyName("Faculty 2");
         faculty2.setFacultyDescription("Desc 2");
