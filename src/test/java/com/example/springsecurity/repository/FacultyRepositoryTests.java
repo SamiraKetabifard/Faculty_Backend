@@ -20,21 +20,27 @@ class FacultyRepositoryTests {
 
     @Test
     void shouldSaveFaculty() {
+        //arrange
         Faculty faculty = new Faculty();
         faculty.setFacultyName("Computer Science");
         faculty.setFacultyDescription("CS Department");
+        //act
         Faculty savedFaculty = facultyRepository.save(faculty);
+        //assert
         assertThat(savedFaculty).isNotNull();
         assertThat(savedFaculty.getId()).isPositive();
         assertThat(savedFaculty.getFacultyName()).isEqualTo("Computer Science");
     }
     @Test
     void shouldFindFacultyById() {
+        //arrange
         Faculty faculty = new Faculty();
         faculty.setFacultyName("Mathematics");
         faculty.setFacultyDescription("Math Department");
         Faculty savedFaculty = facultyRepository.save(faculty);
+        //act
         Optional<Faculty> foundFaculty = facultyRepository.findById(savedFaculty.getId());
+        //assert
         assertThat(foundFaculty).isPresent();
         assertThat(foundFaculty.get().getFacultyName()).isEqualTo("Mathematics");
     }
