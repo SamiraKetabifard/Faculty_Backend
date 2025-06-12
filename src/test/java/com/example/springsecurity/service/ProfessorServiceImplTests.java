@@ -81,24 +81,30 @@ class ProfessorServiceImplTests {
     }
     @Test
     void shouldUpdateProfessor() {
-        //arrange
+        // Arrange
         Long professorId = 1L;
-        Long facultyId = 1L;
+        Long oldFacultyId = 1L;
         Long newFacultyId = 2L;
-        Faculty oldFaculty = new Faculty(facultyId, "Old Faculty", "Desc");
+        Faculty oldFaculty = new Faculty(oldFacultyId, "Old Faculty", "Desc");
         Faculty newFaculty = new Faculty(newFacultyId, "New Faculty", "Desc");
-        Professors existingProfessor = new Professors(professorId, "Samira", "Ketabi", "samira@gmail.com", oldFaculty);
-        ProfessorDto updatedDto = new ProfessorDto(professorId, "Samira", "Ketabifard", "samira1@gmail.com", newFacultyId);
-        Professors updatedProfessor = new Professors(professorId, "Samira", "Ketabifard", "samira1@gmail.com", newFaculty);
+        Professors existingProfessor = new Professors(
+                professorId, "Samira", "Ketabi", "samira@gmail.com", oldFaculty);
+        ProfessorDto updatedDto = new ProfessorDto(
+                professorId, "Samira", "Ketabifard", "samira1@gmail.com", newFacultyId);
+        Professors updatedProfessor = new Professors(
+                professorId, "Samira", "Ketabifard", "samira1@gmail.com", newFaculty);
         when(professorRepository.findById(professorId)).thenReturn(Optional.of(existingProfessor));
         when(facultyRepository.findById(newFacultyId)).thenReturn(Optional.of(newFaculty));
         when(professorRepository.save(any(Professors.class))).thenReturn(updatedProfessor);
-        //act
+        // Act
         ProfessorDto result = professorService.updateProfessor(professorId, updatedDto);
-        //assert
+        // Assert
         assertThat(result.getFirstName()).isEqualTo("Samira");
-        assertThat(result.getEmail()).isEqualTo("samira@gmail.com");
+        assertThat(result.getLastName()).isEqualTo("Ketabifard");
+        assertThat(result.getEmail()).isEqualTo("samira1@gmail.com");
         assertThat(result.getFacultyId()).isEqualTo(newFacultyId);
+        verify(professorRepository).findById(professorId);
+        verify(facultyRepository).findById(newFacultyId);
         verify(professorRepository).save(existingProfessor);
     }
 }

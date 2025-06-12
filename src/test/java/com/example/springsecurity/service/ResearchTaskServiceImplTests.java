@@ -30,7 +30,6 @@ class ResearchTaskServiceImplTests {
         ResearchTasksDto dto = new ResearchTasksDto(null, "New Task", "Description", false);
         ResearchTasks task = ResearchTaskMapper.mapToResearchTasksEntity(dto);
         ResearchTasks savedTask = new ResearchTasks(1L, "New Task", "Description", false);
-
         when(researchTaskRepository.save(any(ResearchTasks.class))).thenReturn(savedTask);
         //act
         ResearchTasksDto result = researchTaskService.addResearchTask(dto);
@@ -45,7 +44,6 @@ class ResearchTaskServiceImplTests {
         Long taskId = 1L;
         ResearchTasks task = new ResearchTasks(taskId, "Task", "Desc", false);
         ResearchTasks completedTask = new ResearchTasks(taskId, "Task", "Desc", true);
-
         when(researchTaskRepository.findById(taskId)).thenReturn(Optional.of(task));
         when(researchTaskRepository.save(any(ResearchTasks.class))).thenReturn(completedTask);
         //act
@@ -60,7 +58,6 @@ class ResearchTaskServiceImplTests {
         Long taskId = 1L;
         ResearchTasks task = new ResearchTasks(taskId, "Task", "Desc", true);
         ResearchTasks incompletedTask = new ResearchTasks(taskId, "Task", "Desc", false);
-
         when(researchTaskRepository.findById(taskId)).thenReturn(Optional.of(task));
         when(researchTaskRepository.save(any(ResearchTasks.class))).thenReturn(incompletedTask);
         //act
