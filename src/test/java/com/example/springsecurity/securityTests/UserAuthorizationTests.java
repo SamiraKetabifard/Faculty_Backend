@@ -29,7 +29,6 @@ class UserAuthorizationTests {
 
     @BeforeEach
     void setUp() {
-        // Clear and create test data with all required fields
         researchTaskRepository.deleteAll();
 
         ResearchTasks task = new ResearchTasks();

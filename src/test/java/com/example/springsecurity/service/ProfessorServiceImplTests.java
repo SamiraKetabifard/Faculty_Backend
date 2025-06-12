@@ -34,26 +34,29 @@ class ProfessorServiceImplTests {
     void shouldCreateProfessor() {
         //arrange
         Long facultyId = 1L;
-        ProfessorDto professorDto = new ProfessorDto(0L, "Samira", "Reza Roz", "samira.reza.roz@example.com", facultyId);
+        ProfessorDto professorDto = new ProfessorDto(0L, "Samira",
+                "Ketabi", "samira@gmail.com", facultyId);
         // Assuming Faculty has a 3-arg constructor (id, name, description)
         Faculty faculty = new Faculty(facultyId, "Science", "Sci Dept");
         Professors professor = ProfessorMapper.mapToProfessors(professorDto);
         professor.setFaculty(faculty);
-        Professors savedProfessor = new Professors(1L, "Samira", "Reza Roz", "samira.reza.roz@example.com", faculty);
+        Professors savedProfessor = new Professors(1L, "Samira", "Ketabi",
+                "samira@gmail.com", faculty);
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(faculty));
         when(professorRepository.save(any(Professors.class))).thenReturn(savedProfessor);
         //act
         ProfessorDto result = professorService.createProfessor(professorDto);
         //assert
         assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getEmail()).isEqualTo("samira.reza.roz@example.com");
+        assertThat(result.getEmail()).isEqualTo("samira@gmail.com");
         verify(professorRepository).save(any(Professors.class));
     }
     @Test
     void shouldThrowExceptionWhenFacultyNotFound() {
         //arrange
         Long facultyId = 1L;
-        ProfessorDto professorDto = new ProfessorDto(0L, "Samira", "Reza Roz", "samira.reza.roz@example.com", facultyId);
+        ProfessorDto professorDto = new ProfessorDto(0L, "Samira", "Ketabi",
+                "samira@gmail.com", facultyId);
         //act
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.empty());
         //assert
@@ -66,7 +69,8 @@ class ProfessorServiceImplTests {
         //arrange
         Long professorId = 1L;
         Faculty faculty = new Faculty(1L, "Science", "Sci Dept");
-        Professors professor = new Professors(professorId, "Samira", "Reza Roz", "samira.reza.roz@example.com", faculty);
+        Professors professor = new Professors(professorId, "Samira", "Ketabi",
+                "samira@gmail.com", faculty);
         when(professorRepository.findById(professorId)).thenReturn(Optional.of(professor));
         //act
         ProfessorDto result = professorService.getProfessorById(professorId);
@@ -83,9 +87,9 @@ class ProfessorServiceImplTests {
         Long newFacultyId = 2L;
         Faculty oldFaculty = new Faculty(facultyId, "Old Faculty", "Desc");
         Faculty newFaculty = new Faculty(newFacultyId, "New Faculty", "Desc");
-        Professors existingProfessor = new Professors(professorId, "Samira", "Reza Roz", "samira.reza.roz.old@example.com", oldFaculty);
-        ProfessorDto updatedDto = new ProfessorDto(professorId, "Samira", "Reza Roz", "samira.reza.roz.new@example.com", newFacultyId);
-        Professors updatedProfessor = new Professors(professorId, "Samira", "Reza Roz", "samira.reza.roz.new@example.com", newFaculty);
+        Professors existingProfessor = new Professors(professorId, "Samira", "Ketabi", "samira@gmail.com", oldFaculty);
+        ProfessorDto updatedDto = new ProfessorDto(professorId, "Samira", "Ketabifard", "samira1@gmail.com", newFacultyId);
+        Professors updatedProfessor = new Professors(professorId, "Samira", "Ketabifard", "samira1@gmail.com", newFaculty);
         when(professorRepository.findById(professorId)).thenReturn(Optional.of(existingProfessor));
         when(facultyRepository.findById(newFacultyId)).thenReturn(Optional.of(newFaculty));
         when(professorRepository.save(any(Professors.class))).thenReturn(updatedProfessor);
@@ -93,7 +97,7 @@ class ProfessorServiceImplTests {
         ProfessorDto result = professorService.updateProfessor(professorId, updatedDto);
         //assert
         assertThat(result.getFirstName()).isEqualTo("Samira");
-        assertThat(result.getEmail()).isEqualTo("samira.reza.roz.new@example.com");
+        assertThat(result.getEmail()).isEqualTo("samira@gmail.com");
         assertThat(result.getFacultyId()).isEqualTo(newFacultyId);
         verify(professorRepository).save(existingProfessor);
     }

@@ -38,7 +38,7 @@ class ResearchTaskRepositoryTests {
     void shouldFindTaskById() {
         // Create and save a task
         ResearchTasks task = new ResearchTasks();
-        task.setTitle("Find Me");
+        task.setTitle("task1");
         task.setDescription("Task to find");
         task.setCompleted(true);
         ResearchTasks savedTask = researchTaskRepository.save(task);
@@ -46,7 +46,7 @@ class ResearchTaskRepositoryTests {
         Optional<ResearchTasks> foundTask = researchTaskRepository.findById(savedTask.getId());
         // Verify the found task
         assertThat(foundTask).isPresent();
-        assertThat(foundTask.get().getTitle()).isEqualTo("Find Me");
+        assertThat(foundTask.get().getTitle()).isEqualTo("task1");
         assertThat(foundTask.get().isCompleted()).isTrue();
     }
     @Test
@@ -75,8 +75,8 @@ class ResearchTaskRepositoryTests {
     void shouldUpdateTask() {
         // Create and save initial task
         ResearchTasks task = new ResearchTasks();
-        task.setTitle("Original Title");
-        task.setDescription("Original Description");
+        task.setTitle("Title");
+        task.setDescription("Description");
         task.setCompleted(false);
         ResearchTasks savedTask = researchTaskRepository.save(task);
         // Update the task

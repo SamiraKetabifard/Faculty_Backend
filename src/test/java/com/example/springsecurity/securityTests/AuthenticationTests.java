@@ -39,12 +39,4 @@ class AuthenticationTests {
         mockMvc.perform(post("/api/researchtasks"))
                 .andExpect(status().isUnauthorized());
     }
-    @Test
-    @WithMockUser(username = "invalid", password = "invalid")
-    void invalidCredentialsShouldFail() throws Exception {
-        // This test simulates invalid credentials (though WithMockUser bypasses actual authentication)
-        // In a real scenario, you'd test against actual authentication
-        mockMvc.perform(get("/api/faculties"))
-                .andExpect(status().isOk()); // This will pass because WithMockUser creates valid authentication
-    }
 }

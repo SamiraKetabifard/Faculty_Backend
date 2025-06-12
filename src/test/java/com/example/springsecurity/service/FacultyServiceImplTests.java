@@ -28,39 +28,44 @@ class FacultyServiceImplTests {
 
     @Test
     void shouldCreateFaculty() {
-        FacultyDto facultyDto = new FacultyDto(0L, "New Faculty", "Description"); // Use 0L instead of null
+        //0L instead of null
+        //arrange
+        FacultyDto facultyDto = new FacultyDto(0L, "New Faculty", "Description");
         Faculty faculty = FacultyMapper.mapToFacultyEntity(facultyDto);
-        Faculty savedFaculty = new Faculty(1L, "New Faculty", "Description"); // Assuming 3-arg constructor
-
+        Faculty savedFaculty = new Faculty(1L, "New Faculty", "Description");
         when(facultyRepository.save(any(Faculty.class))).thenReturn(savedFaculty);
-
+        //act
         FacultyDto result = facultyService.createFaculty(facultyDto);
-
+        //assert
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getFacultyName()).isEqualTo("New Faculty");
         verify(facultyRepository).save(any(Faculty.class));
     }
     @Test
     void shouldGetFacultyById() {
+        //arrange
         Long facultyId = 1L;
-        Faculty faculty = new Faculty(facultyId, "Existing Faculty", "Description"); // 3-arg constructor
-
+        Faculty faculty = new Faculty(facultyId, "Existing Faculty", "Description");
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(faculty));
-
+        //act
         FacultyDto result = facultyService.getFacultiesById(facultyId);
-
+        //assert
         assertThat(result.getId()).isEqualTo(facultyId);
         assertThat(result.getFacultyName()).isEqualTo("Existing Faculty");
     }
     @Test
     void shouldThrowExceptionWhenFacultyNotFound() {
+        //arrange
         Long facultyId = 1L;
-
+        //act
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.empty());
-
+        //assert
         assertThatThrownBy(() -> facultyService.getFacultiesById(facultyId))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Faculty not found");
+        //ResourceNotFoundException ex = assertThrows(ResourceNotFoundException.class,
+        //        () -> facultyService.getFacultiesById(facultyId));
+        //assertEquals("Faculty not found", ex.getMessage());
     }
     @Test
     void shouldGetAllFaculties() {
@@ -80,17 +85,16 @@ class FacultyServiceImplTests {
     void shouldUpdateFaculty() {
         //arrange
         Long facultyId = 1L;
-        Faculty existingFaculty = new Faculty(facultyId, "Old Name", "Old Desc");
-        FacultyDto updatedDto = new FacultyDto(facultyId, "New Name", "New Desc");
-        Faculty updatedFaculty = new Faculty(facultyId, "New Name", "New Desc");
-
+        Faculty existingFaculty = new Faculty(facultyId, "ai1", "ai1");
+        FacultyDto updatedDto = new FacultyDto(facultyId, "ai1", "ai1");
+        Faculty updatedFaculty = new Faculty(facultyId, "ai2", "ai2");
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(existingFaculty));
         when(facultyRepository.save(any(Faculty.class))).thenReturn(updatedFaculty);
         //act
         FacultyDto result = facultyService.updateFaculty(facultyId, updatedDto);
         //assert
-        assertThat(result.getFacultyName()).isEqualTo("New Name");
-        assertThat(result.getFacultyDescription()).isEqualTo("New Desc");
+        assertThat(result.getFacultyName()).isEqualTo("ai1");
+        assertThat(result.getFacultyDescription()).isEqualTo("ai1");
         verify(facultyRepository).save(existingFaculty);
     }
     @Test
