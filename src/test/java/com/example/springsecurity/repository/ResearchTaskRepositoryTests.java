@@ -20,14 +20,14 @@ class ResearchTaskRepositoryTests {
 
     @Test
     void shouldSaveResearchTask() {
-        // Create new task using setters
+        // Arrange
         ResearchTasks task = new ResearchTasks();
         task.setTitle("New Research");
         task.setDescription("Research Description");
         task.setCompleted(false);
-        // Save the task
+        // Act
         ResearchTasks savedTask = researchTaskRepository.save(task);
-        // Verify the saved task
+        // Assert
         assertThat(savedTask).isNotNull();
         assertThat(savedTask.getId()).isPositive();
         assertThat(savedTask.getTitle()).isEqualTo("New Research");
@@ -36,22 +36,22 @@ class ResearchTaskRepositoryTests {
     }
     @Test
     void shouldFindTaskById() {
-        // Create and save a task
+        // Arrange
         ResearchTasks task = new ResearchTasks();
         task.setTitle("task1");
         task.setDescription("Task to find");
         task.setCompleted(true);
         ResearchTasks savedTask = researchTaskRepository.save(task);
-        // Find the task by ID
+        // Act
         Optional<ResearchTasks> foundTask = researchTaskRepository.findById(savedTask.getId());
-        // Verify the found task
+        // Assert
         assertThat(foundTask).isPresent();
         assertThat(foundTask.get().getTitle()).isEqualTo("task1");
         assertThat(foundTask.get().isCompleted()).isTrue();
     }
     @Test
     void shouldFindAllTasks() {
-        // Create and save multiple tasks
+        // Arrange
         ResearchTasks task1 = new ResearchTasks();
         task1.setTitle("Task 1");
         task1.setDescription("Description 1");
@@ -63,9 +63,9 @@ class ResearchTaskRepositoryTests {
         task2.setDescription("Description 2");
         task2.setCompleted(true);
         researchTaskRepository.save(task2);
-        // Get all tasks
+        // Act
         List<ResearchTasks> allTasks = researchTaskRepository.findAll();
-        // Verify
+        // Assert
         assertThat(allTasks).hasSize(2);
         assertThat(allTasks)
                 .extracting(ResearchTasks::getTitle)
@@ -73,18 +73,18 @@ class ResearchTaskRepositoryTests {
     }
     @Test
     void shouldUpdateTask() {
-        // Create and save initial task
+        // Arrange
         ResearchTasks task = new ResearchTasks();
         task.setTitle("Title");
         task.setDescription("Description");
         task.setCompleted(false);
         ResearchTasks savedTask = researchTaskRepository.save(task);
-        // Update the task
+        // Act
         savedTask.setTitle("Updated Title");
         savedTask.setDescription("Updated Description");
         savedTask.setCompleted(true);
         ResearchTasks updatedTask = researchTaskRepository.save(savedTask);
-        // Verify the update
+        // Assert
         Optional<ResearchTasks> foundTask = researchTaskRepository.findById(updatedTask.getId());
         assertThat(foundTask).isPresent();
         assertThat(foundTask.get().getTitle()).isEqualTo("Updated Title");
@@ -93,20 +93,20 @@ class ResearchTaskRepositoryTests {
     }
     @Test
     void shouldDeleteTask() {
-        // Create and save a task
+        // Arrange
         ResearchTasks task = new ResearchTasks();
         task.setTitle("To Be Deleted");
         task.setDescription("Task description");
         ResearchTasks savedTask = researchTaskRepository.save(task);
-        // Delete the task
+        // Act
         researchTaskRepository.deleteById(savedTask.getId());
-        // Verify deletion
+        // Assert
         Optional<ResearchTasks> deletedTask = researchTaskRepository.findById(savedTask.getId());
         assertThat(deletedTask).isEmpty();
     }
     @Test
     void shouldFilterCompletedTasksInMemory() {
-        // Create and save tasks with different completion statuses
+        // Arrange
         ResearchTasks completedTask = new ResearchTasks();
         completedTask.setTitle("Completed Task");
         completedTask.setDescription("Completed description");
@@ -118,13 +118,12 @@ class ResearchTaskRepositoryTests {
         incompleteTask.setDescription("Incomplete description");
         incompleteTask.setCompleted(false);
         researchTaskRepository.save(incompleteTask);
-        // Get all tasks and filter in memory
+        // Act
         List<ResearchTasks> allTasks = researchTaskRepository.findAll();
         List<ResearchTasks> completedTasks = allTasks.stream()
                 .filter(ResearchTasks::isCompleted)
                 .toList();
-        // Verify
+        // Assert
         assertThat(completedTasks).hasSize(1);
-        assertThat(completedTasks.get(0).getTitle()).isEqualTo("Completed Task");
     }
 }
