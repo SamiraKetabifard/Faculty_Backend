@@ -42,7 +42,6 @@ class EndpointSecurityTests {
     @Test
     @WithMockUser(roles = "USER")
     void researchTaskCompletionShouldAllowUser() throws Exception {
-        // Use the real saved task ID
         mockMvc.perform(patch("/api/researchtasks/" + taskId + "/complete")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
