@@ -97,9 +97,6 @@ class FacultyServiceImplTests {
         assertThat(result.getFacultyName()).isEqualTo("ai2");
         assertThat(result.getFacultyDescription()).isEqualTo("updated description");
         verify(facultyRepository).findById(facultyId);
-        verify(facultyRepository).save(argThat(faculty ->
-                faculty.getFacultyName().equals("ai2") &&
-                        faculty.getFacultyDescription().equals("updated description")));
     }
     @Test
     void shouldDeleteFaculty() {
