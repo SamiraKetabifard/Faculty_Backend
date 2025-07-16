@@ -84,19 +84,22 @@ class FacultyServiceImplTests {
     }
     @Test
     void shouldUpdateFaculty() {
-        //arrange
+        // Arrange
         Long facultyId = 1L;
-        Faculty existingFaculty = new Faculty(facultyId, "ai1", "ai1");
-        FacultyDto updatedDto = new FacultyDto(facultyId, "ai1", "ai1");
-        Faculty updatedFaculty = new Faculty(facultyId, "ai2", "ai2");
+        Faculty existingFaculty = new Faculty(facultyId, "ai1", "original description");
+        FacultyDto updatedDto = new FacultyDto(facultyId, "ai2", "updated description");
+        Faculty savedFaculty = new Faculty(facultyId, "ai2", "updated description");
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(existingFaculty));
-        when(facultyRepository.save(any(Faculty.class))).thenReturn(updatedFaculty);
-        //act
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(savedFaculty);
+        // Act
         FacultyDto result = facultyService.updateFaculty(facultyId, updatedDto);
-        //assert
-        assertThat(result.getFacultyName()).isEqualTo("ai1");
-        assertThat(result.getFacultyDescription()).isEqualTo("ai1");
-        verify(facultyRepository).save(existingFaculty);
+        // Assert
+        assertThat(result.getFacultyName()).isEqualTo("ai2");
+        assertThat(result.getFacultyDescription()).isEqualTo("updated description");
+        verify(facultyRepository).findById(facultyId);
+        verify(facultyRepository).save(argThat(faculty ->
+                faculty.getFacultyName().equals("ai2") &&
+                        faculty.getFacultyDescription().equals("updated description")));
     }
     @Test
     void shouldDeleteFaculty() {
