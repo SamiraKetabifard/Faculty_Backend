@@ -32,7 +32,8 @@ class FacultyServiceImplTests {
         //arrange
         FacultyDto facultyDto = new FacultyDto(0L, "New Faculty", "Description");
         Faculty faculty = FacultyMapper.mapToFacultyEntity(facultyDto);
-        Faculty savedFaculty = new Faculty(1L, "New Faculty", "Description");
+        Faculty savedFaculty = FacultyMapper.mapToFacultyEntity(facultyDto);
+        savedFaculty.setId(1L);
         when(facultyRepository.save(any(Faculty.class))).thenReturn(savedFaculty);
         //act
         FacultyDto result = facultyService.createFaculty(facultyDto);
