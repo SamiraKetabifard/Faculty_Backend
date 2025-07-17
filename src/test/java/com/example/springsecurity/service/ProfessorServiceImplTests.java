@@ -53,7 +53,7 @@ class ProfessorServiceImplTests {
     @Test
     void shouldThrowExceptionWhenFacultyNotFound() {
         //arrange
-        Long facultyId = 1L;
+        Long facultyId = 1000L;
         ProfessorDto professorDto = new ProfessorDto(0L, "Samira", "Ketabi",
                 "samira@gmail.com", facultyId);
         //act
