@@ -35,20 +35,19 @@ class ProfessorServiceImplTests {
         //arrange
         Long facultyId = 1L;
         ProfessorDto professorDto = new ProfessorDto(0L, "Samira",
-                "Ketabi", "samira@gmail.com", facultyId);
-        // Assuming Faculty has a 3-arg constructor (id, name, description)
+                "Ketabi", "s@gmail.com", facultyId);
         Faculty faculty = new Faculty(facultyId, "Science", "Sci Dept");
         Professors professor = ProfessorMapper.mapToProfessors(professorDto);
         professor.setFaculty(faculty);
         Professors savedProfessor = new Professors(1L, "Samira", "Ketabi",
-                "samira@gmail.com", faculty);
+                "s@gmail.com", faculty);
         when(facultyRepository.findById(facultyId)).thenReturn(Optional.of(faculty));
         when(professorRepository.save(any(Professors.class))).thenReturn(savedProfessor);
         //act
         ProfessorDto result = professorService.createProfessor(professorDto);
         //assert
         assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getEmail()).isEqualTo("samira@gmail.com");
+        assertThat(result.getEmail()).isEqualTo("s@gmail.com");
         verify(professorRepository).save(any(Professors.class));
     }
     @Test
